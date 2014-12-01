@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+     </head>
+      <% if @query %>
+      <h1>Search Results for: <%= @query %></h1>
+      <ul>
+       <% @movie_list.each do |movie| %>
+          <% if movie["title"].downcase.include?@query.downcase%>
+      <li>
+                 <a href=<%= "/movies/"+"#{movie["title"].gsub(' ', "_")}"%>>
+                 <%=movie["title"]%></a>
+                 <% @search_array << movie["title"] %>
+      </li>
+          <%end%>
+          <% if movie["synopsis"] == nil %>
+          <% elsif movie["synopsis"].downcase.include?@query.downcase %>
+               <% if !@search_array.include?movie["title"]%>
+      <li>
+                 <a href=<%= "/movies/"+"#{movie["title"].gsub(' ', "_")}"%>>
+                 <%=movie["title"]%></a>
+      </li>
+               <%end%>
+          <% end %>
+       <% end %>
+
+       <%else%>
+     <body>
+
+          <a href =<%= "/" %>>
+          <%="Home Page"%> </a>
+          <ul></ul>
+          <% if @order != "year" %>
+          <a href =<%= "/movies?order=year"%>>
+          <%="Order by Year"%></a>
+          <% end %>
+          <ul></ul>
+          <% if @order != "rating" %>
+          <a href =<%= "/movies?order=rating"%>>
+          <%="Order by Rating"%></a>
+
+          <% end %>
+          <ul></ul>
+          <% if @order != "title" %>
+          <a href =<%= "/movies?order=title"%>>
+          <%="Order by Title"%></a>
+          <% end %>
+          <ul></ul>
+
+          <ul>
+            <form action="/movies" method="get">
+            <label for="query">Search: </label>
+            <input type="text" name="query" id="query" />
+            <input type="submit" value="Search" />
+            </form>
+          </ul>
+
+          <%if @page.to_i > 1%>
+             <a href =<%= "/movies?page=" + "#{(@page.to_i-1)}" + "&order=" + "#{@order}"%>>
+             <%="Previous Page"%></a>
+             <br>
+          <% end %>
+             <a href =<%= "/movies?page=" + "#{(@page.to_i+1)}" + "&order=" + "#{@order}"%>>
+             <%="Next Page"%></a>
+             <br>
+
+      <h1> Movie List </h1>
+        <% @movie_list.each do |movie| %>
+        <ul>
+        <a href =<%= "/movies/" + "#{movie["title"].gsub(' ', "_")}"%>>
+        <%= movie["title"]%> </a>
+        <li><%= movie["year"]%></li>
+        <li><%= "Rating: "%>
+            <%= movie["rating"]%>
+        </li>
+        <li><%= movie["genre"]%></li>
+        <li><%= movie["name"]%></li>
+        </ul>
+        <% end %>
+       <% end %>
+     </body>

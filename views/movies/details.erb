@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+     </head>
+     <body>
+      <h1><%=@movie_name%></h1>
+        <%= @movie_details[0]["year"]%>
+        <br>
+        <%= @movie_details[0]["genre"]%>
+        <br>
+        <%= @movie_details[0]["name"]%>
+        <br>
+
+        <% @movie_details.each do |details| %>
+      <ul>
+      <li>
+        <a href =<%= "/actors/" + "#{details["id"]}"%>>
+        <%=details["casting"]%></a>
+        <%=details["character"]%>
+      </li>
+      </ul>
+        <% end %>

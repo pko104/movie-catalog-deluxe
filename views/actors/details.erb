@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+     </head>
+     <body>
+      <h1><%=@actor_details[0]["name"]%></h1>
+        <% @actor_details.each do |details| %>
+      <ul>
+        <h2><a href =<%='/movies/' + "#{details["title"].gsub(' ', "_")}"%>>
+          <%= details["title"]%></a></h2>
+          <li>  <%= details["year"]%> </li>
+          <% if details["character"] != nil %>
+          <li>  <%= details["character"]%> </li>
+          <% end %>
+      </ul>
+        <% end %>

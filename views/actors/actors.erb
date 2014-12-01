@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+     </head>
+     <body>
+
+     <% if @query %>
+
+      <h1>Search Results for: <%= @query %></h1>
+      <ul>
+       <% @actor_list.each do |actor| %>
+          <% if actor["name"].downcase.include?@query.downcase%>
+      <li>
+            <% if !@search_array.include?actor["name"]%>
+                 <a href=<%= "/actors/"+"#{actor["id"]}"%>>
+                 <%=actor["name"]%></a>
+                 <% @search_array << actor["name"] %>
+            <%end%>
+      </li>
+          <%end%>
+          <% if actor["character"] == nil %>
+          <% elsif actor["character"].downcase.include?@query.downcase %>
+               <% if !@search_array.include?actor["name"]%>
+      <li>
+                 <a href=<%= "/actors/"+"#{actor["id"]}"%>>
+                 <%=actor["name"]%></a>
+                 <% @search_array << actor["name"] %>
+      </li>
+               <%end%>
+          <% end %>
+       <% end %>
+
+
+       <% else %>
+
+          <a href =<%= "/" %>>
+          <%="Search Page"%> </a>
+
+           <ul>
+           <form action="/actors" method="get">
+           <label for="query">Search: </label>
+           <input type="text" name="query" id="query" />
+           <input type="submit" value="Search" />
+           </form>
+           </ul>
+
+          <%if @page.to_i > 1%>
+             <a href =<%= "/actors?page=" + "#{(@page.to_i-1)}" %>>
+             <%="Previous Page"%></a>
+             <br>
+          <% end %>
+             <a href =<%= "/actors?page=" + "#{(@page.to_i+1)}" %>>
+             <%="Next Page"%></a>
+             <br>
+
+      <h1> Actor List </h1>
+        <% @actor_list.each do |actor| %>
+        <ul>
+        <a href =<%= "/actors/" + "#{actor["id"]}"%>>
+        <%= actor["name"]%> </a>
+        <%="Starring In:"%>
+        <%=actor["count"]%> <%="Movie(s)"%>
+        </ul>
+        <% end %>
+        <% end %>
+     </body>

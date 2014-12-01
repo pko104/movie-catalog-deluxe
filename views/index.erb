@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <title>Basic HTML Page</title>
+    <link rel="stylesheet" href="home.css" />
+     </head>
+     <body>
+
+      <h1>MOVIE TIME!!!</h1>
+
+         <ul>
+          <a href =<%= "/movies?page=1" %>>
+          <%="Check all movies"%> </a>
+
+        <form action="/movies" method="get">
+        <label for="query">Search: </label>
+        <input type="text" name="query" id="query" />
+        <input type="submit" value="Search" />
+        </form>
+        </ul>
+
+        <ul>
+          <a href =<%= "/actors?page=1" %>>
+          <%="Check all actors"%><% </a>
+
+        <form action="/actors" method="get">
+        <label for="query">Search: </label>
+        <input type="text" name="query" id="query" />
+        <input type="submit" value="Search" />
+        </form>
+        </ul>
+
+
+    </body>
